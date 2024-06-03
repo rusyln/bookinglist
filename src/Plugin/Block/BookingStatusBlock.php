@@ -31,6 +31,9 @@ class BookingStatusBlock extends BlockBase {
             ['Confirmed Bookings', $confirmed_count],
             ['Pending Bookings', $pending_count],
         ],
+        '#attributes' => [
+            'style' => 'margin: 10px 10px 10px;',
+        ],
     ];
 }
 
