@@ -44,7 +44,8 @@ class BookingStatusBlock extends BlockBase {
   private function getBookingCount($status) {
     $query = \Drupal::entityQuery('node')
       ->condition('type', 'booking')
-      ->condition('field_booking_status', $status);
+      ->condition('field_booking_status', $status)
+      ->accessCheck(FALSE);
     $nids = $query->execute();
 
     return count($nids);
