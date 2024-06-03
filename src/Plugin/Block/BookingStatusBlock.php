@@ -25,14 +25,13 @@ class BookingStatusBlock extends BlockBase {
     $pending_count = $this->getBookingCount('pending');
 
     return [
+        '#prefix' => '<div style="margin: 10px;">',
+        '#suffix' => '</div>',
         '#theme' => 'table',
         '#header' => ['Booking Status', 'Count'],
         '#rows' => [
             ['Confirmed Bookings', $confirmed_count],
             ['Pending Bookings', $pending_count],
-        ],
-        '#attributes' => [
-            'style' => 'margin: 10px 10px 10px;',
         ],
     ];
 }
