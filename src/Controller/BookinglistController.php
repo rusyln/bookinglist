@@ -31,11 +31,15 @@ class BookinglistController extends ControllerBase {
       '#items' => [],
     ];
 
-    foreach ($nids as $nid) {
-      $node = Node::load($nid);
-      $url = Url::fromRoute('entity.node.canonical', ['node' => $nid]);
-      $link = Link::fromTextAndUrl($node->getTitle(), $url);
-      $build['content']['#items'][] = $link->toRenderable();
+    if (empty($nids)) {
+      $build['content']['#items'][] = $this->t("You don't have a current conference room booking.");
+    } else {
+      foreach ($nids as $nid) {
+        $node = Node::load($nid);
+        $url = Url::fromRoute('entity.node.canonical', ['node' => $nid]);
+        $link = Link::fromTextAndUrl($node->getTitle(), $url);
+        $build['content']['#items'][] = $link->toRenderable();
+      }
     }
 
     return $build;
