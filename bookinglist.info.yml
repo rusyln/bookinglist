@@ -1,0 +1,7 @@
+name: BookingList
+type: module
+description: This will be the list of Booking
+package: Booking
+core_version_requirement: ^9 || ^10
+dependencies:
+  - views

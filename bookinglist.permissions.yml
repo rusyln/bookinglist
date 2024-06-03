@@ -1,0 +1,4 @@
+administer bookinglist configuration:
+  title: 'Administer bookinglist configuration'
+  description: 'Optional description.'
+  restrict access: true

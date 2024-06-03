@@ -1,0 +1,8 @@
+bookinglist.example:
+  path: '/bookinglist/example'
+  defaults:
+    _title: 'Example'
+    _controller: '\Drupal\bookinglist\Controller\BookinglistController::build'
+  requirements:
+    _permission: 'access content'
+
