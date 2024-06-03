@@ -26,6 +26,7 @@ class BookinglistController extends ControllerBase {
       'start_date' => $this->t('Start Date'),
       'end_date' => $this->t('End Date'),
       'room' => $this->t('Room'),
+      'status' => $this->t('Booking Status'),
     ];
 
     $rows = [];
@@ -35,6 +36,7 @@ class BookinglistController extends ControllerBase {
         $node = Node::load($nid);
         $start_date = $node->get('field_field_start_datetime')->value;
         $end_date = $node->get('field_end_datetime')->value;
+        $status = $node->get('field_booking_status')->value;
         $room_tid = $node->get('field_rooms')->target_id;
         $room_term = Term::load($room_tid);
         $room_name = $room_term ? $room_term->getName() : '';
@@ -57,6 +59,7 @@ class BookinglistController extends ControllerBase {
           'start_date' => $formatted_start_date,
           'end_date' => $formatted_end_date,
           'room' => $room_name,
+          'status' => $status,
         ];
       }
     }
