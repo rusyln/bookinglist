@@ -22,7 +22,8 @@ class BookinglistController extends ControllerBase {
     $query = \Drupal::entityQuery('node')
       ->condition('status', 1)
       ->condition('type', 'booking') // Change 'booking' to your content type
-      ->condition('uid', $uid);
+      ->condition('uid', $uid)
+      ->accessCheck(FALSE);
     $nids = $query->execute();
 
     $build['content'] = [
