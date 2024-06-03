@@ -25,12 +25,14 @@ class BookingStatusBlock extends BlockBase {
     $pending_count = $this->getBookingCount('pending');
 
     return [
-      '#markup' => $this->t('Confirmed Bookings: @confirmed <br> Pending Bookings: @pending', [
-        '@confirmed' => $confirmed_count,
-        '@pending' => $pending_count,
-      ]),
+        '#theme' => 'table',
+        '#header' => ['Booking Status', 'Count'],
+        '#rows' => [
+            ['Confirmed Bookings', $confirmed_count],
+            ['Pending Bookings', $pending_count],
+        ],
     ];
-  }
+}
 
   /**
    * Get the count of bookings by status.
