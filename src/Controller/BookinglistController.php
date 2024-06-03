@@ -6,41 +6,57 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\node\Entity\Node;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
+use Drupal\taxonomy\Entity\Term;
 
-/**
- * Returns responses for BookingList routes.
- */
 class BookinglistController extends ControllerBase {
 
-  /**
-   * Builds the response.
-   */
   public function build() {
     $user = \Drupal::currentUser();
     $uid = $user->id();
 
     $query = \Drupal::entityQuery('node')
       ->condition('status', 1)
-      ->condition('type', 'booking') // Change 'booking' to your content type
+      ->condition('type', 'booking')
       ->condition('uid', $uid)
       ->accessCheck(FALSE);
     $nids = $query->execute();
 
-    $build['content'] = [
-      '#theme' => 'item_list',
-      '#items' => [],
+    $header = [
+      'title' => $this->t('Title'),
+      'start_date' => $this->t('Start Date'),
+      'end_date' => $this->t('End Date'),
+      'room' => $this->t('Room'),
     ];
 
-    if (empty($nids)) {
-      $build['content']['#items'][] = $this->t("You don't have a current conference room booking.");
-    } else {
+    $rows = [];
+
+    if (!empty($nids)) {
       foreach ($nids as $nid) {
         $node = Node::load($nid);
+        $start_date = $node->get('field_field_start_datetime')->value;
+        $end_date = $node->get('field_end_datetime')->value;
+        $room_tid = $node->get('field_rooms')->target_id;
+        $room_term = Term::load($room_tid);
+        $room_name = $room_term ? $room_term->getName() : '';
+
         $url = Url::fromRoute('entity.node.canonical', ['node' => $nid]);
-        $link = Link::fromTextAndUrl($node->getTitle(), $url);
-        $build['content']['#items'][] = $link->toRenderable();
+        $link = Link::fromTextAndUrl($node->getTitle(), $url)->toString();
+
+        $rows[] = [
+          'title' => $link,
+          'start_date' => $start_date,
+          'end_date' => $end_date,
+          'room' => $room_name,
+        ];
       }
     }
+
+    $build['content'] = [
+      '#type' => 'table',
+      '#header' => $header,
+      '#rows' => $rows,
+      '#empty' => $this->t("You don't have a current conference room booking."),
+    ];
 
     return $build;
   }
