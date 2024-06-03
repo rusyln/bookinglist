@@ -39,13 +39,23 @@ class BookinglistController extends ControllerBase {
         $room_term = Term::load($room_tid);
         $room_name = $room_term ? $room_term->getName() : '';
 
+
+        // Convert to DateTime objects
+        $start_datetime = new \DateTime($start_date);
+        $end_datetime = new \DateTime($end_date);
+
+        // Format the dates
+        $formatted_start_date = $start_datetime->format('F d, Y H:i');
+        $formatted_end_date = $end_datetime->format('F d, Y H:i');
+
+
         $url = Url::fromRoute('entity.node.canonical', ['node' => $nid]);
         $link = Link::fromTextAndUrl($node->getTitle(), $url)->toString();
 
         $rows[] = [
           'title' => $link,
-          'start_date' => $start_date,
-          'end_date' => $end_date,
+          'start_date' => $formatted_start_date,
+          'end_date' => $formatted_end_date,
           'room' => $room_name,
         ];
       }
