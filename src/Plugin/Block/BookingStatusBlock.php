@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\booking_status_block\Plugin\Block;
+namespace Drupal\bookinglist\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Form\FormStateInterface;
