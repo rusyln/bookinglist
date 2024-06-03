@@ -40,3 +40,4 @@ class BookinglistController extends ControllerBase {
     return $build;
   }
 
+}
