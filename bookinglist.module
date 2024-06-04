@@ -13,7 +13,7 @@ use Drupal\Core\Database\Database;
  */
 function booking_list_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   // Check if this is the booking form by form ID.
-  if ($form_id == 'booking_form_id') {
+  if ($form_id == 'node-booking-form') {
     // Add custom validation handler.
     $form['#validate'][] = 'booking_list_custom_validate';
   }
