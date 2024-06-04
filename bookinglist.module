@@ -34,7 +34,7 @@ function booking_list_custom_validate(array &$form, FormStateInterface $form_sta
 
   // Query the database to check if the room is already booked during the selected time range.
   $connection = Database::getConnection();
-  $query = $connection->select('booking_table', 'b')
+  $query = $connection->select('booking', 'b')
     ->fields('b', ['booking_id'])
     ->condition('field_rooms', $room)
     ->condition('field_start_datetime', $end->format('Y-m-d H:i:s'), '<')
