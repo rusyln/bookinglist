@@ -1,27 +1,2 @@
 <?php
 
-/**
- * @file
- * Primary module hooks for BookingList module.
- */
-
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Database\Database;
-
-
-
-function bookinglist_form_alter(&$form, &$form_state, $form_id) {
-  
-
-    if ($form_id == 'node-booking-form') {
-        $form['#validate'][] = 'bookinglist_dev_form_validate';
-        dpm($form['#validate']);
-      }
-  } 
-
-
-  function bookinglist_dev_form_validate($form, &$form_state) {
-    if ($form_state['values']['title'] == 'the quick fox jumped over the lazy dog') {
-      form_set_error('title', t('You have added an invalid title.'));
-    }
-  }
