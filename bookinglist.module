@@ -14,7 +14,7 @@ function bookinglist_form_alter(&$form, &$form_state, $form_id) {
   
 
     if ($form_id == 'node-booking-form') {
-        $form['#validate'][] = 'starting_drupal_dev_form_validate';
+        $form['#validate'][] = 'bookinglist_dev_form_validate';
         dpm($form['#validate']);
       }
   } 
