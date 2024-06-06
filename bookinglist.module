@@ -8,43 +8,11 @@
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Database\Database;
 
-/**
- * Implements hook_form_alter().
- */
-function booking_list_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  // Check if this is the booking form by form ID.
-  if ($form_id == 'node-booking-form') {
-    // Add custom validation handler.
-    $form['#validate'][] = 'booking_list_custom_validate';
-  }
-}
 
-/**
- * Custom validation handler.
- */
-function booking_list_custom_validate(array &$form, FormStateInterface $form_state) {
-  // Get the date, time, and room values from the form.
-  $start_datetime = $form_state->getValue('field_start_datetime');
-  $end_datetime = $form_state->getValue('field_end_datetime');
-  $room = $form_state->getValue('field_rooms');
 
-  // Convert the start and end datetime values to DateTime objects.
-  $start = new \DateTime($start_datetime);
-  $end = new \DateTime($end_datetime);
-
-  // Query the database to check if the room is already booked during the selected time range.
-  $connection = Database::getConnection();
-  $query = $connection->select('booking', 'b')
-    ->fields('b', ['booking_id'])
-    ->condition('field_rooms', $room)
-    ->condition('field_start_datetime', $end->format('Y-m-d H:i:s'), '<')
-    ->condition('field_end_datetime', $start->format('Y-m-d H:i:s'), '>=')
-    ->accessCheck(FALSE);
-
-  $results = $query->execute();
-
-  if ($results->fetchField()) {
-    // If a booking exists, set an error.
-    $form_state->setErrorByName('field_start_datetime', t('The selected date and time range is already booked for the chosen room.'));
-  }
-}
+function bookinglist_form_alter_form_alter(&$form, &$form_state, $form_id) {
+    if ($form_id == 'node-booking-form') {
+     
+      dpm($form['#validate']);
+    }
+  } 
